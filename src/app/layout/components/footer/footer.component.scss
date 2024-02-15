@@ -1,0 +1,15 @@
+.footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 10px 0;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+}
+.footer .container-fluid {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+}

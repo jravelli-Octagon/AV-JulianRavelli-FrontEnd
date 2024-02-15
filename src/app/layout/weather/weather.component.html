@@ -1,0 +1,94 @@
+<div>
+    <h1 class="main-title">{{ 'Weather Service' | translate }}</h1>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card card-default">
+            <!-- <div class="card-header card-header-av">
+                <h4 class="card-title ">{{ 'Select Zone' | translate }}</h4>
+            </div> -->
+            <div class="card-body">
+                <h4 class="main-title">{{ 'Select Zone' | translate }}</h4>
+
+                <form [formGroup]="searchForm" (ngSubmit)="search()">
+                    <div class="form-group col-12 col-lg-10">
+                        <label for="country">{{ 'Country' | translate }}</label>
+                        <select class="form-control" [(ngModel)]="selectedCountry" [ngModelOptions]="{standalone: true}" (change)="countryChange($event.target.value)">
+                            <option [ngValue]="undefined">{{ 'Must select Country' | translate }}</option>
+							<option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
+                        </select>
+
+                        <!-- <input id="country"  formControlName="country" class="form-control" placeholder="{{ 'Country...' | translate }}"> -->
+                    </div>
+
+                    <div class="form-group col-12 col-lg-10">
+                        <label for="province">{{'Province' | translate}}</label>
+                        <select class="form-control"  formControlName="province">
+                            <option *ngIf="selectedCountry === undefined">{{ 'Must select Country' | translate }}</option>
+                            <ng-container *ngIf="selectedCountry != undefined">
+                                <option>{{ 'Must select Province' | translate}}</option>
+                                <option *ngFor="let city of selectedCountry.cities" [ngValue]="city.value">{{ city.name }}</option>
+                            </ng-container>
+                            
+                        </select>
+
+                        <!-- <input id="province"  formControlName="province" class="form-control" placeholder="{{ 'Province...' | translate }}"> -->
+                    </div>
+
+                    <div class="col-12 col-lg-12">
+                        <div class="button-container col-12">
+                            <div class="spinner-container" [hidden]="!searching">
+                                <mat-spinner diameter="20"></mat-spinner>
+                            </div>
+                            <button class="btn btn-primary col-12 search-button" [disabled]="searching">
+                                <i class="material-icons" [hidden]="searching">search</i>
+                                <span [innerHTML]="' ' + ((searching == true ? 'Searching' : 'Search') | translate)"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6" *ngIf="weather.current != null && weather.current != undefined">
+        <div class="card card-default">
+            <div class="card-body">
+               <h4 class="main-title">{{ 'Report' | translate }}</h4>
+               <div class="row">
+                    <div class="col-6">
+                        <div class="location m-0">
+                            <p> {{ getCountry() }}</p>
+                            <h4> {{ getCity() }}</h4>
+                        </div>
+                        <h2 class="weekday m-0"> {{ weather.daily.data[0].day | date: 'EEEE' }}</h2>
+                        <h3> {{ weather.current.summary | translate }}</h3>
+                        <h2 class="m-0"> {{ (weather.current.temperature | number:'1.0-1')  + '°C' }} </h2>
+                        <h2> {{ ((weather.current.temperature * 9/5 + 32) | number:'1.0-1') + '°F' }} </h2>
+                    </div>
+                    <div class="col-6">
+                        <img class="main-icon" [src]="'/assets/images/weather_icons/' + weather.current.icon_num + '.png'" />
+                        <div class="bottom">
+                            <p> {{ ('Precipitations' | translate) + ': ' + weather.current.precipitation.total }}</p>
+                            <p> {{ ('Wind' | translate) + ': ' + weather.current.wind.speed }}</p>
+                        </div>
+                    </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="weather.daily != null && weather.daily != undefined">
+    <ng-container *ngFor="let day of weather.daily.data; let i=index" >
+        <div class="card col-2" *ngIf="i > 0 && i < 7">
+            <div class="card-body text-center">
+                <h1 class="weekday"> {{ day.day | date: 'EEEE' }} </h1>
+                <img [src]="'/assets/images/weather_icons/' + day.icon + '.png'" />
+                <h2> {{ (day.all_day.temperature | number:'1.0-1') + '°C' }} </h2>
+                <h2> {{ ((day.all_day.temperature * 9/5 + 32) | number:'1.0-1') + '°F' }} </h2>
+            </div>
+        </div>
+    </ng-container>
+</div>

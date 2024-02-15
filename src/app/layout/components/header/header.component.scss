@@ -1,0 +1,29 @@
+.nav-header {
+    background-color: #ff6859 !important;
+    color: #ffffff !important;
+    padding: 10px;
+}
+
+.icon-middle {
+    vertical-align: middle;
+}
+
+.login-panel {
+    position: absolute;
+    right: 0;
+    width: 30vw;
+    z-index: 999;
+}
+strong{
+	margin-left: 5px;
+	color: #dc3545;
+}
+
+.btn-outline-secondary {
+    color:#ffffff !important;
+    box-shadow: none !important;
+    border-color: #ffffff;
+}
+.btn-outline-secondary:hover {
+    border-color: #ffffff!important;
+}

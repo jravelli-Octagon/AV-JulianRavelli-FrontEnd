@@ -1,0 +1,24 @@
+.weekday {
+    text-transform: uppercase;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+}
+    .bottom p {
+        margin: 0;
+    }
+
+.location {
+    margin-bottom: 2em;
+}
+    .location p, .location h4 {
+        color: #AAAAAA;
+        margin: 0;
+    }
+
+.main-icon {
+    height: 10em;
+    width: 10em;
+}
